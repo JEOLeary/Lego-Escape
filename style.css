@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- LEGO Logo --- */
+#logo {
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+#logo span {
+    display: inline-block;
+    font-family: "Impact", "Arial Black", "Helvetica Neue", sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 5px;
+    color: #fff;
+    position: relative;
+    /* Brick depth via box-shadow */
+    box-shadow:
+        0 5px 0 rgba(0, 0, 0, 0.25),
+        0 -2px 0 rgba(255, 255, 255, 0.2);
+    /* Tiny stud dot on each letter */
+    text-shadow: 0 0 0 transparent;
+}
+
+/* Stud bumps on top — small circles resembling LEGO studs */
+#logo span::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 25%;
+    width: 8px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px 4px 0 0;
+}
+
+#logo span::after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    right: 25%;
+    width: 8px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px 4px 0 0;
+}
+
+#logo span.space {
+    width: 18px;
+    background: transparent;
+    box-shadow: none;
+}
+
+#logo span.space::before,
+#logo span.space::after {
+    display: none;
+}
+
+/* LEGO color cycle — each letter gets a different brick color */
+#logo span:nth-child(1)  { background: #E53935; } /* L - Red */
+#logo span:nth-child(2)  { background: #FB8C00; } /* E - Orange */
+#logo span:nth-child(3)  { background: #FDD835; color: #333; } /* G - Yellow */
+#logo span:nth-child(4)  { background: #43A047; } /* O - Green */
+#logo span:nth-child(6)  { background: #1E88E5; } /* E - Blue */
+#logo span:nth-child(7)  { background: #8E24AA; } /* S - Purple */
+#logo span:nth-child(8)  { background: #EC407A; } /* C - Pink */
+#logo span:nth-child(9)  { background: #E53935; } /* A - Red */
+#logo span:nth-child(10) { background: #FB8C00; } /* P - Orange */
+#logo span:nth-child(11) { background: #43A047; } /* E - Green */
+
+canvas {
+    display: block;
+    border: 2px solid #333;
+}

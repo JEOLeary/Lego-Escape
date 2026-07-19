@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "Lego_Escape",
+  "project_id": "f324a4fb-a639-40a7-8bf0-65b568310e28"
+}
