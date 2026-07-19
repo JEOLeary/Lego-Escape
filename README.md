@@ -58,7 +58,7 @@ js/
 
 ## Key Features
 
-- Mixed-width LEGO bricks (1x1, 1x2, 1x4, 1x8) packed randomly per row
+- Mixed-width LEGO bricks (1x1, 1x2, 1x4) packed randomly per row, 10-color palette, no consecutive same colors
 - Cylinder studs on all bricks, hidden by layering — upper bricks draw over lower studs
 - Spidering crack damage on multi-hit bricks
 - Paddle acceleration that resets on direction change
@@ -67,3 +67,4 @@ js/
 - Floating score popups on brick hits
 - 3 lives with ball-icon display
 - Dark gradient background
+- Creator credit footer
