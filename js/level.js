@@ -1,6 +1,7 @@
 // level.js — Brick layout and level configuration
-// Builds a grid of 4 rows with mixed-width bricks (1x2, 1x4, 1x8).
-// Higher rows have more HP. Exposes brick array for collision and rendering.
+// Builds a grid of 4 rows with mixed-width bricks (1x1, 1x2, 1x4).
+// Higher rows have more HP. Bricks render bottom-to-top so upper
+// bricks naturally cover the studs of bricks below them.
 
 import { renderBricks } from "./brick.js";
 
@@ -32,7 +33,6 @@ export function init(canvas) {
     const brickHeight = TARGET_BRICK_HEIGHT;
     const topMargin = canvas.height * TOP_MARGIN_RATIO;
 
-    // Size options: { studs, widthMultiplier }
     const SIZE_OPTIONS = [
         { studs: 1, mult: 0.5 },
         { studs: 2, mult: 1 },
@@ -46,12 +46,10 @@ export function init(canvas) {
         while (xPos < canvas.width - 1) {
             const remaining = canvas.width - xPos;
 
-            // Which sizes fit in the remaining space?
             const fitting = SIZE_OPTIONS.filter(function (o) {
                 return o.mult * baseWidth <= remaining + 1;
             });
 
-            // Should never be empty — at least 1x2 always fits (baseWidth <= canvas.width)
             const choice = fitting[Math.floor(Math.random() * fitting.length)];
             const bw = choice.mult * baseWidth > remaining ? remaining : choice.mult * baseWidth;
 
@@ -63,7 +61,7 @@ export function init(canvas) {
                 color: COLORS[Math.floor(Math.random() * COLORS.length)],
                 hp: hp,
                 initialHp: hp,
-                hasBrickAbove: false, // computed dynamically in render()
+                hasBrickAbove: false, // studs hidden by layering, not by flag
                 studCount: choice.studs,
                 cracks: [],
             });
@@ -79,33 +77,15 @@ export function getBricks() {
 
 export function removeBrick(index) {
     bricks.splice(index, 1);
-    recomputeStuds();
-}
-
-export function render(ctx) {
-    renderBricks(ctx, bricks);
 }
 
 /**
- * Recompute hasBrickAbove for every brick by checking x-range overlap
- * with bricks in the row directly above. Called once at init and again
- * whenever a brick is destroyed.
+ * Render bricks bottom-to-top. Upper bricks draw after lower ones,
+ * so their bodies cover the studs protruding from bricks below.
+ * Only the topmost bricks in each column show their studs.
  */
-function recomputeStuds() {
-    for (let i = 0; i < bricks.length; i++) {
-        const brick = bricks[i];
-        const aboveY = brick.y - brick.height;
-        brick.hasBrickAbove = false;
-        for (let j = 0; j < bricks.length; j++) {
-            const other = bricks[j];
-            if (other === brick) continue;
-            if (Math.abs(other.y - aboveY) < 1 &&
-                other.x < brick.x + brick.width &&
-                other.x + other.width > brick.x) {
-                brick.hasBrickAbove = true;
-                break;
-        }
+export function render(ctx) {
+    for (let i = bricks.length - 1; i >= 0; i--) {
+        renderBricks(ctx, [bricks[i]]);
     }
-    recomputeStuds();
-}
 }

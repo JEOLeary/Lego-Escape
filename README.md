@@ -59,8 +59,7 @@ js/
 ## Key Features
 
 - Mixed-width LEGO bricks (1x1, 1x2, 1x4, 1x8) packed randomly per row
-- Cylinder studs on all bricks, hidden only when a brick sits directly above
-- Destroying a brick reveals the studs beneath it in real time
+- Cylinder studs on all bricks, hidden by layering — upper bricks draw over lower studs
 - Spidering crack damage on multi-hit bricks
 - Paddle acceleration that resets on direction change
 - Ball attaches to paddle — launch with Up/W
