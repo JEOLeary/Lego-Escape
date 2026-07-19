@@ -13,11 +13,16 @@ const MIN_COLUMNS = 4;
 const TOP_MARGIN_RATIO = 0.08;
 
 export const COLORS = [
-    "#E53935",
-    "#FB8C00",
-    "#FDD835",
-    "#43A047",
-    "#1E88E5",
+    "#E53935", // Red
+    "#FB8C00", // Orange
+    "#FDD835", // Yellow
+    "#43A047", // Green
+    "#1E88E5", // Blue
+    "#8E24AA", // Purple
+    "#EC407A", // Pink
+    "#00ACC1", // Cyan
+    "#7CB342", // Lime
+    "#FF7043", // Coral
 ];
 
 let bricks = [];
@@ -42,6 +47,7 @@ export function init(canvas) {
     for (let row = 0; row < ROWS; row++) {
         const hp = ROWS - row;
         let xPos = 0;
+        let prevColor = ""; // avoid consecutive same color in this row
 
         while (xPos < canvas.width - 1) {
             const remaining = canvas.width - xPos;
@@ -53,12 +59,19 @@ export function init(canvas) {
             const choice = fitting[Math.floor(Math.random() * fitting.length)];
             const bw = choice.mult * baseWidth > remaining ? remaining : choice.mult * baseWidth;
 
+            // Pick a random color different from the previous brick
+            let color;
+            do {
+                color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            } while (color === prevColor);
+            prevColor = color;
+
             bricks.push({
                 x: xPos,
                 y: topMargin + row * brickHeight,
                 width: bw,
                 height: brickHeight,
-                color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                color: color,
                 hp: hp,
                 initialHp: hp,
                 hasBrickAbove: false, // studs hidden by layering, not by flag
