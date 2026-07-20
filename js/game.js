@@ -15,13 +15,42 @@ import { isPressed } from "./input.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// --- Game state ---
-const STARTING_LIVES = 3;
-let lives = STARTING_LIVES;
-let gameState = "playing"; // "playing", "won", or "lost"
-
 // --- Time tracking ---
 let lastTime = 0;
+
+// --- Game state ---
+const STARTING_LIVES = 2;
+let lives = STARTING_LIVES;
+let gameState = "playing"; // "playing", "won", "lost", or "paused"
+
+// --- Help modal ---
+const helpModal = document.getElementById("help-modal");
+const helpText = document.getElementById("help-text");
+const helpIcon = document.getElementById("help-icon");
+const modalClose = document.querySelector(".modal-close");
+let helpKeyWasDown = false;
+
+function openHelp() {
+    if (gameState === "playing" || gameState === "paused") {
+        gameState = "paused";
+        helpModal.classList.remove("hidden");
+    }
+}
+
+function closeHelp() {
+    if (gameState === "paused") {
+        gameState = "playing";
+        helpModal.classList.add("hidden");
+        lastTime = 0;
+    }
+}
+
+helpText.addEventListener("click", openHelp);
+helpIcon.addEventListener("click", openHelp);
+modalClose.addEventListener("click", closeHelp);
+helpModal.addEventListener("click", (e) => {
+    if (e.target === helpModal) closeHelp();
+});
 
 // --- Resize ---
 // Canvas fills 80% of the viewport. On resize, restart the game
@@ -55,11 +84,27 @@ function gameLoop(timestamp) {
 
 // --- Update game state ---
 function update(dt) {
+    // Check for help toggle (ESC or H) — edge-triggered to prevent rapid toggling
+    const helpKeyDown = isPressed("Escape") || isPressed("h") || isPressed("H");
+    if (helpKeyDown && !helpKeyWasDown) {
+        if (gameState === "paused") {
+            closeHelp();
+        } else if (gameState === "playing") {
+            openHelp();
+        }
+    }
+    helpKeyWasDown = helpKeyDown;
+
     // On end screens, only check for restart input
     if (gameState === "won" || gameState === "lost") {
         if (isPressed("r") || isPressed("R")) {
             restart();
         }
+        return;
+    }
+
+    // Paused — skip game updates
+    if (gameState === "paused") {
         return;
     }
 
@@ -151,7 +196,9 @@ function render() {
     renderPopups(ctx);
     renderUI(ctx, canvas, lives);
 
-    if (gameState === "won") {
+    if (gameState === "paused") {
+        renderOverlay(ctx, canvas, "Paused", "Press H or ESC to resume");
+    } else if (gameState === "won") {
         renderOverlay(ctx, canvas, "You Win!", "Press R to restart");
     } else if (gameState === "lost") {
         renderOverlay(ctx, canvas, "Game Over", "Press R to restart");

@@ -12,8 +12,134 @@
         <span class="space"></span>
         <span>E</span><span>S</span><span>C</span><span>A</span><span>P</span><span>E</span>
     </div>
-    <canvas id="gameCanvas"></canvas>
-    <div id="footer">Created by Myles (8), Samantha (11), and Jason O'Leary (I don't wanna talk about)</div>
+    <div id="canvas-wrap">
+        <canvas id="gameCanvas"></canvas>
+        <button id="help-icon" title="Help">?</button>
+    </div>
+    <div id="below-canvas">
+        <span id="help-text">Arrow keys to move, Up to launch</span>
+        <div id="footer">Created by Myles (8), Samantha (11), and Jason O'Leary (I don't wanna talk about)</div>
+    </div>
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h1>How to Play</h1>
+            <div class="section">
+                <h2>Controls</h2>
+                <p><strong>Left / Right Arrow Keys:</strong> Move the paddle</p>
+                <p><strong>Up Arrow Key:</strong> Launch the ball</p>
+                <p><strong>R:</strong> Restart after game over</p>
+                <p><strong>ESC or H:</strong> Open/close this help screen</p>
+            </div>
+            <div class="section">
+                <h2>Objective</h2>
+                <p>Destroy all bricks to win! You start with 3 lives. Lose a life when the ball falls below the paddle. Game over when all lives are lost.</p>
+            </div>
+            <div class="section">
+                <h2>Scoring</h2>
+                <div class="diagram">
+                    <div class="brick-row">
+                        <div class="brick-example" style="background:#E53935;grid-column:span 2;">
+                            <span class="brick-hp">4 HP</span>
+                            <span class="brick-points">+1 +1 +1 +2</span>
+                        </div>
+                    </div>
+                    <p class="diagram-caption">Top row: 4 HP bricks (5 pts total)</p>
+                </div>
+                <div class="diagram">
+                    <div class="brick-row">
+                        <div class="brick-example" style="background:#43A047;grid-column:span 2;">
+                            <span class="brick-hp">2 HP</span>
+                            <span class="brick-points">+1 +2</span>
+                        </div>
+                    </div>
+                    <p class="diagram-caption">Middle rows: 2-3 HP bricks (3-4 pts total)</p>
+                </div>
+                <div class="diagram">
+                    <div class="brick-row">
+                        <div class="brick-example" style="background:#1E88E5;grid-column:span 1;">
+                            <span class="brick-hp">1 HP</span>
+                            <span class="brick-points">+1</span>
+                        </div>
+                    </div>
+                    <p class="diagram-caption">Bottom row: 1 HP bricks (1 pt each)</p>
+                </div>
+                <p><strong>Points:</strong> +1 for each hit, +2 bonus for destroying multi-hit bricks</p>
+            </div>
+            <div class="section">
+                <h2>Brick Damage</h2>
+                <div class="diagram">
+                    <div class="brick-row">
+                        <div class="brick-example" style="background:#FB8C00;grid-column:span 2;">
+                            <span class="brick-hp">No damage</span>
+                        </div>
+                        <div class="brick-example" style="background:#FB8C00;grid-column:span 2;">
+                            <span class="brick-hp">1 hit</span>
+                            <span class="crack-line"></span>
+                        </div>
+                        <div class="brick-example" style="background:#FB8C00;grid-column:span 2;">
+                            <span class="brick-hp">2 hits</span>
+                            <span class="crack-line"></span>
+                            <span class="crack-line crack2"></span>
+                        </div>
+                        <div class="brick-example" style="background:#FB8C00;grid-column:span 2;">
+                            <span class="brick-hp">3 hits</span>
+                            <span class="crack-line"></span>
+                            <span class="crack-line crack2"></span>
+                            <span class="crack-line crack3"></span>
+                        </div>
+                    </div>
+                    <p class="diagram-caption">Cracks appear as bricks take damage</p>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Paddle Acceleration</h2>
+                <div class="speed-bar-container">
+                    <div class="speed-bar">
+                        <div class="speed-fill"></div>
+                    </div>
+                    <div class="speed-labels">
+                        <span>300</span>
+                        <span>600</span>
+                        <span>900</span>
+                    </div>
+                    <p class="speed-caption">Speed (px/s) — Holding a direction accelerates from 300 to 900</p>
+                </div>
+                <p>Changing direction resets to base speed (300). Paddle movement influences ball bounce angle.</p>
+            </div>
+            <div class="section">
+                <h2>Ball Collision Physics</h2>
+                <div class="diagram collision-diagram">
+                    <div class="collision-row">
+                        <div class="collision-item">
+                            <div class="paddle-diagram">
+                                <div class="paddle-rect"></div>
+                            </div>
+                            <p>Center hit: straight up</p>
+                        </div>
+                        <div class="collision-item">
+                            <div class="paddle-diagram angled">
+                                <div class="paddle-rect"></div>
+                            </div>
+                            <p>Edge hit: angled bounce</p>
+                        </div>
+                    </div>
+                </div>
+                <p><strong>Paddle bounce:</strong> Angle depends on where the ball hits. Center = straight up, edges = angled. Moving paddle adds extra horizontal velocity (30% influence).</p>
+                <p><strong>Wall bounce:</strong> Perfect reflection with anti-stuck prevention.</p>
+                <p><strong>Brick bounce:</strong> Reflects off the side the ball entered from.</p>
+            </div>
+            <div class="section">
+                <h2>Tips</h2>
+                <ul>
+                    <li>Use paddle speed to control ball angle</li>
+                    <li>Bricks crack visually as they take damage</li>
+                    <li>Top row bricks need 4 hits to destroy</li>
+                    <li>Bottom row bricks are easiest targets</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <script type="module" src="js/game.js"></script>
 </body>
 </html>

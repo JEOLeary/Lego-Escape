@@ -91,13 +91,328 @@ canvas {
     border-bottom: none;
 }
 
+#canvas-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+#help-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #555;
+    background: rgba(0, 0, 0, 0.4);
+    color: #888;
+    font-family: monospace;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+#help-icon:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+#below-canvas {
+    width: 80vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    user-select: none;
+}
+
+#help-text {
+    color: #888;
+    font-family: monospace;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+#help-text:hover {
+    color: #fff;
+}
+
 /* --- Footer --- */
 #footer {
-    width: 80vw;
     text-align: right;
-    padding-top: 4px;
     color: #555;
     font-family: monospace;
     font-size: 11px;
     user-select: none;
+}
+
+/* --- Modal --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: #1a1a2e;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 28px 32px;
+    max-width: 560px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    font-family: monospace;
+    color: #ddd;
+    box-shadow: 0 0 40px rgba(68, 136, 255, 0.15);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #fff;
+}
+
+.modal-content h1 {
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    color: #88aaff;
+    font-size: 16px;
+    margin: 18px 0 8px 0;
+    border-bottom: 1px solid #333;
+    padding-bottom: 4px;
+}
+
+.modal-content p {
+    margin: 6px 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.modal-content ul {
+    margin: 6px 0 6px 20px;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.modal-content strong {
+    color: #fff;
+}
+
+.section {
+    margin-bottom: 12px;
+}
+
+/* --- Diagrams --- */
+.diagram {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.brick-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.brick-example {
+    height: 36px;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 11px;
+}
+
+.brick-hp {
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.brick-points {
+    font-size: 10px;
+    color: #FFD700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.crack-line {
+    position: absolute;
+    width: 70%;
+    height: 2px;
+    background: rgba(0,0,0,0.6);
+    top: 50%;
+    left: 15%;
+    transform: rotate(-10deg);
+}
+
+.crack-line.crack2 {
+    top: 40%;
+    transform: rotate(15deg);
+    width: 50%;
+    left: 25%;
+}
+
+.crack-line.crack3 {
+    top: 60%;
+    transform: rotate(-5deg);
+    width: 60%;
+    left: 20%;
+}
+
+.diagram-caption {
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    margin: 0;
+}
+
+/* --- Speed Bar --- */
+.speed-bar-container {
+    margin: 8px 0;
+}
+
+.speed-bar {
+    width: 100%;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.speed-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #43A047, #FB8C00, #E53935);
+    border-radius: 10px;
+}
+
+.speed-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.speed-caption {
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+    margin: 4px 0 0 0;
+}
+
+/* --- Collision Diagram --- */
+.collision-diagram .collision-row {
+    display: flex;
+    justify-content: space-around;
+    gap: 16px;
+}
+
+.collision-item {
+    text-align: center;
+}
+
+.collision-item p {
+    font-size: 11px;
+    color: #888;
+    margin-top: 6px;
+}
+
+.paddle-diagram {
+    width: 80px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.paddle-rect {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(68, 136, 255, 0.5);
+}
+
+.paddle-diagram::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #4488FF;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #4488FF;
+}
+
+.paddle-diagram::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 35px;
+    background: #666;
+    top: 15px;
+    left: 39px;
+    border-radius: 1px;
+}
+
+.paddle-diagram::before {
+    top: 5px;
+    left: 35px;
+}
+
+.paddle-diagram.angled::after {
+    transform: rotate(-30deg);
+    transform-origin: top center;
+}
+
+.paddle-diagram.angled::before {
+    top: 5px;
+    left: 55px;
 }

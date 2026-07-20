@@ -72,10 +72,16 @@ export function render(ctx, canvas, lives) {
     const iconRadius = 6;
     const spacing = 20;
     const iconY = 14;
-    const startX = canvas.width - 15;
+    const startX = canvas.width - 80;
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "14px monospace";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Lives:", startX - 8, iconY);
 
     for (let i = 0; i < lives; i++) {
-        const x = startX - i * spacing;
+        const x = startX + i * spacing;
 
         // Mini ball — white fill with blue glow
         ctx.save();
