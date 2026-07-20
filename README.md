@@ -22,8 +22,13 @@ Open `http://localhost:8000` in your browser.
 | Arrow Right / D | Move paddle right |
 | Arrow Up / W | Launch ball (from paddle) |
 | R | Restart (on win/lose screen) |
+| H / ESC | Toggle help modal |
 
 The paddle accelerates the longer you hold a direction — let go or switch sides to reset.
+
+## Help Modal
+
+Click the help text or `?` icon (top-right of canvas) to open an in-game guide covering controls, scoring, brick damage, paddle acceleration, and ball collision physics. The game pauses while the modal is open.
 
 ## Scoring
 
@@ -65,6 +70,6 @@ js/
 - Ball attaches to paddle — launch with Up/W
 - Pulsing ball glow and blue-tinted motion trail
 - Floating score popups on brick hits
-- 3 lives with ball-icon display
+- 2 lives with ball-icon display
 - Dark gradient background
 - Creator credit footer
